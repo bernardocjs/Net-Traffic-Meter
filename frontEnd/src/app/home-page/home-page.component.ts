@@ -7,7 +7,8 @@ import { SocketService } from '../services/socket.service';
   styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent {
-  constructor(private socket: SocketService) {}
+  constructor(
+    private socket: SocketService) {}
 
   public title = 'Home Page';
 }

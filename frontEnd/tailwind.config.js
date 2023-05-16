@@ -1,3 +1,8 @@
+const {
+  iconsPlugin,
+  getIconCollections,
+} = require("@egoist/tailwindcss-icons");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   daisyui: {
@@ -9,6 +14,8 @@ module.exports = {
           accent: "#1FB2A5",
           neutral: "#191D24",
           "base-100": "#2A303C",
+          "base-200": "#0E1526",
+          "base-300": "#FFF",
           info: "#3ABFF8",
           success: "#36D399",
           warning: "#FBBD23",
@@ -21,5 +28,11 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require("@tailwindcss/typography"), require("daisyui")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("daisyui"),
+    iconsPlugin({
+      collections: getIconCollections(["mdi", "lucide"]),
+    }),
+  ],
 };
