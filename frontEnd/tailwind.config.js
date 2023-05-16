@@ -15,7 +15,7 @@ module.exports = {
           neutral: "#191D24",
           "base-100": "#2A303C",
           "base-200": "#0E1526",
-          "base-300": "#FFF",
+          "base-400": "#FFF",
           info: "#3ABFF8",
           success: "#36D399",
           warning: "#FBBD23",
@@ -34,5 +34,6 @@ module.exports = {
     iconsPlugin({
       collections: getIconCollections(["mdi", "lucide"]),
     }),
+    require("tailwind-scrollbar"),
   ],
 };
