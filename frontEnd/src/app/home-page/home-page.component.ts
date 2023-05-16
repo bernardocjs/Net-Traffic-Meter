@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { SocketService } from '../services/socket.service';
 
 @Component({
@@ -8,6 +8,4 @@ import { SocketService } from '../services/socket.service';
 })
 export class HomePageComponent {
   constructor(private socket: SocketService) {}
-
-  public title = 'Home Page';
 }

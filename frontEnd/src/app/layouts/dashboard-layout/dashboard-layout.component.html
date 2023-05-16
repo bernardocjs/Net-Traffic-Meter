@@ -1,0 +1,49 @@
+<!-- layout.component.html -->
+<header>
+  <!-- header content goes here -->
+</header>
+<main>
+
+  <div class="shadow bg-base-200 drawer drawer-mobile h-screen">
+    <input id="my-drawer-2" type="checkbox" class="drawer-toggle">
+    <div class="flex flex-col drawer-content py-10 px-20">
+      <br> <label for="my-drawer-2" class="mb-4 btn btn-primary text-white drawer-button w-24 lg:hidden">open
+        menu</label>
+      <router-outlet></router-outlet>
+      <div class="text-xs lg:hidden">
+      </div>
+    </div>
+    <div class="drawer-side">
+      <label for="my-drawer-2" class="drawer-overlay"></label>
+      <ul class="menu p-4  w-80 bg-neutral text-base-100">
+        <div class="flex flex-col items-center">
+          <img src="../../../assets/ioThink-logo.png" class="w-20 mb-2 mt-2" />
+        </div>
+        <div>
+          <h1 class=" text-2xl font-bold text-white my-10">Menu</h1>
+        </div>
+        <li>
+          <a routerLink="home" routerLinkActive="active bg-primary text-white">
+            <span class="i-mdi-house-add-outline text-2xl"></span>
+            Home</a>
+        </li>
+        <li>
+
+          <a class="text-white" routerLink="routines" routerLinkActive="active bg-primary text-primary"> <span
+              class="i-mdi-chart-areaspline text-2xl"></span>Ranking</a>
+
+        </li>
+        <li>
+          <a class="text-white" routerLink="logs" routerLinkActive="active bg-primary text-primary">
+            <span class="i-mdi-settings text-2xl"></span>
+            Configurations</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+</main>
+<footer>
+  <!-- footer content goes here -->
+</footer>
