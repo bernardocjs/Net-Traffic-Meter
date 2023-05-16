@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { io } from 'socket.io-client';
 
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+@Injectable({
+  providedIn: 'root',
 })
-export class AppComponent implements OnInit {
-  title = 'frontEnd';
+export class SocketService implements OnInit {
+  constructor() {}
 
   ngOnInit() {
     // Connect to each port

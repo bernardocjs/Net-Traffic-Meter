@@ -19,6 +19,7 @@ network_client.connect(PORT_TRAFFIC, HOST, () => {
 
 io.on("connection", (socket) => {
   network_client.on("data", (data) => {
+    console.log("funfa");
     socket.emit("data", JSON.parse(data));
   });
 });

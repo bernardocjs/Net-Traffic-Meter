@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pys": "python.exe traffic_analyzer_v2.py",
+    "ns": "node node_wrapper_v2.js"
   },
   "keywords": [],
   "author": "",
