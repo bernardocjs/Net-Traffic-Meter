@@ -7,11 +7,13 @@ import { TrafficInfo } from '../interfaces/traffic-info';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit {
   constructor(private socket: SocketService) {}
   trafficData!: TrafficInfo[];
 
-  onClick() {
-    this.trafficData = this.socket.trafficInfo;
+  ngOnInit(): void {
+    this.socket.getTrafficInfo().subscribe((data: TrafficInfo[]) => {
+      this.trafficData = data;
+    });
   }
 }

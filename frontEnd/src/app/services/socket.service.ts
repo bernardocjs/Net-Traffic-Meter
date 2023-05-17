@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { io } from 'socket.io-client';
 import { TrafficInfo } from '../interfaces/traffic-info';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,13 @@ import { TrafficInfo } from '../interfaces/traffic-info';
 export class SocketService implements OnInit {
   constructor() {}
 
-  trafficInfo: TrafficInfo[] = [];
+  private trafficInfoSubject: Subject<TrafficInfo[]> = new Subject<
+    TrafficInfo[]
+  >();
+
+  getTrafficInfo(): Observable<TrafficInfo[]> {
+    return this.trafficInfoSubject.asObservable();
+  }
 
   ngOnInit() {
     // Connect to each port
@@ -21,8 +28,7 @@ export class SocketService implements OnInit {
 
   deserializeInfo(data: any) {
     if (!data) return;
-    this.trafficInfo = data;
-    console.log(this.trafficInfo);
+    this.trafficInfoSubject.next(data);
   }
 
   // createSocketConnection(port: number) {
