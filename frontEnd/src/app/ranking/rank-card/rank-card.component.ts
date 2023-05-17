@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-rank-card',
   templateUrl: './rank-card.component.html',
-  styleUrls: ['./rank-card.component.scss']
+  styleUrls: ['./rank-card.component.scss'],
 })
 export class RankCardComponent {
-
+  @Input()
+  ranking!: number;
 }
