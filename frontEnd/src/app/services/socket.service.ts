@@ -6,67 +6,70 @@ import { Observable, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class SocketService implements OnInit {
+export class SocketService {
   constructor() {}
 
   private trafficInfoSubject: Subject<TrafficInfo[]> = new Subject<
     TrafficInfo[]
   >();
+  private totalDownload: Subject<number> = new Subject<number>();
+  public downloadFromApplication: number = 0;
+  public downloadUsage: number = 0;
 
   getTrafficInfo(): Observable<TrafficInfo[]> {
     return this.trafficInfoSubject.asObservable();
   }
 
-  ngOnInit() {
-    // Connect to each port
-    // Para utilizar o traffic_analyzer_v2.py com esse exemplo, remova os números 50001 e 50002 do array abaixo:
-    // const ports = [8000];
-    // ports.forEach((port) => {
-    //   this.createSocketConnection(port);
-    // });
+  parseDownloadUsage(download: string): number {
+    const valueWithUnit = download.match(/[0-9.]+|[A-Za-z]+/g);
+    if (!valueWithUnit) return 0;
+    const value = parseFloat(valueWithUnit[0]);
+    const unit = valueWithUnit[1];
+    const numericValue = value;
+    if (isNaN(value)) return 0;
+    if (unit === 'B') {
+      return numericValue;
+    } else if (unit === 'KB') {
+      return numericValue * 1024;
+    } else if (unit === 'MB') {
+      return numericValue * 1024 * 1024;
+    } else if (unit === 'GB') {
+      return numericValue * 1024 * 1024 * 1024;
+    } else {
+      return 0; // Invalid unit or format
+    }
+  }
+
+  getDownloadUsage(data: any): number {
+    if (!data) return 0;
+
+    const download = data.map((info: any) => {
+      this.downloadFromApplication += this.parseDownloadUsage(info.download);
+
+      return this.parseDownloadUsage(info.download);
+    });
+    return download;
+  }
+
+  formatDownloadSize(sizeInBytes: number): string {
+    const units = ['B', 'KB', 'MB', 'GB'];
+    let size = sizeInBytes;
+    let unitIndex = 0;
+
+    while (size >= 1024 && unitIndex < units.length - 1) {
+      size /= 1024;
+      unitIndex++;
+    }
+
+    return size.toFixed(2) + units[unitIndex];
   }
 
   deserializeInfo(data: any) {
     if (!data) return;
+    this.totalDownload.next(this.getDownloadUsage(data));
+    console.log(this.downloadFromApplication);
+    console.log(this.formatDownloadSize(this.downloadFromApplication));
+    this.downloadFromApplication = 0;
     this.trafficInfoSubject.next(data);
   }
-
-  // createSocketConnection(port: number) {
-  //   const socket = io(`http://localhost:${port}`);
-
-  //   socket.on('connect', () => {
-  //     console.log(`Connected to localhost:${port}`);
-  //     // You can send data through the socket here
-  //     socket.emit('message', `Hello from port ${port}`);
-  //   });
-
-  //   socket.on('data', (data: any) => {
-  //     console.log(JSON.stringify(data, null, 2));
-  //     // Handle received data
-  //   });
-
-  //   socket.on('hostnameTraffic', (data: any) => {
-  //     console.log(JSON.stringify(data, null, 2));
-  //     // Handle received data
-  //   });
-
-  //   socket.on('protocolTraffic', (data: any) => {
-  //     console.log('aloo2');
-  //     console.log(JSON.stringify(data, null, 2));
-  //     // Handle received data
-  //   });
-
-  //   socket.on('networkTraffic', (data: any) => {
-  //     console.log(JSON.stringify(data, null, 2));
-  //     // Handle received data
-  //   });
-
-  //   socket.on('disconnect', () => {
-  //     console.log(`Connection closed on localhost:${port}`);
-  //   });
-
-  //   socket.on('error', (err: any) => {
-  //     console.error(`Socket error on localhost:${port}:`, err);
-  //   });
-  // }
 }
