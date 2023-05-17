@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { SocketService } from '../services/socket.service';
+import { TrafficInfo } from '../interfaces/traffic-info';
 
 @Component({
   selector: 'app-home-page',
@@ -8,4 +9,9 @@ import { SocketService } from '../services/socket.service';
 })
 export class HomePageComponent {
   constructor(private socket: SocketService) {}
+  trafficData!: TrafficInfo[];
+
+  onClick() {
+    this.trafficData = this.socket.trafficInfo;
+  }
 }

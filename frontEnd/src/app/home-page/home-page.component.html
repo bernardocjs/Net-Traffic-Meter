@@ -1,45 +1,49 @@
-<div class="flex justify-center h-full bg-neutral rounded-2xl">
-  <div class="my-20 w-full flex flex-col items-center">
-    <div class="stats h-28 w-3/5 shadow overflow-x-hidden">
-      <div class="stat flex flex-col justify-center items-center">
-        <div class="stat-title ">Internet Usage</div>
-        <div class="flex flex-row items-center">
-          <div class="stat-value text-secondary mr-3">31K</div>
-          <span class="i-mdi-internet w-6 py-4"></span>
+<div class="flex justify-center h-screen min-h-5/6 bg-neutral rounded-2xl">
+  <div class="my-20 w-full h-4/5 flex flex-col overflow-y-hidden items-center">
+
+    <div class="flex flex-col w-full justify-center items-center  h-48">
+      <div class="stats h-32 w-3/5 shadow overflow-hidden mb-10">
+        <div class="stat flex flex-col justify-center items-center">
+          <div class="stat-title ">Internet Usage</div>
+          <div class="flex flex-row items-center">
+            <div class="stat-value text-secondary mr-3">31K</div>
+            <span class="i-mdi-internet w-6 py-4"></span>
+          </div>
+          <div class="stat-desc">Jan 1st - Feb 1st</div>
         </div>
-        <div class="stat-desc">Jan 1st - Feb 1st</div>
+
+        <div class="stat flex flex-col justify-center items-center">
+          <div class="stat-title">Most expensive</div>
+          <div class="flex flex-row items-center">
+            <div class="stat-value mr-3">Discord</div>
+            <span class="i-lucide-coins p-3 text-secondary"></span>
+          </div>
+          <div class="stat-desc flex flex-row">
+            <span class="i-mdi-sucess-outline text-success"></span>
+            <p>First</p>
+          </div>
+        </div>
+
+
+        <div class="stat flex flex-col justify-center items-center">
+
+          <div class="stat-title">Download Usage</div>
+          <div class="flex flex-row items-center">
+            <div class="stat-value text-secondary mr-3">2.5KB</div>
+            <span class="i-mdi-download w-8 py-4"></span>
+          </div>
+
+          <div class="stat-desc">Momentary use</div>
+        </div>
+
       </div>
-
-      <div class="stat flex flex-col justify-center items-center">
-        <div class="stat-title">Most expensive</div>
-        <div class="flex flex-row items-center">
-          <div class="stat-value mr-3">Discord</div>
-          <span class="i-lucide-coins p-3 text-secondary"></span>
-        </div>
-        <div class="stat-desc flex flex-row">
-          <span class="i-mdi-sucess-outline text-success"></span>
-          <p>First</p>
-        </div>
-      </div>
-
-
-      <div class="stat flex flex-col justify-center items-center">
-
-        <div class="stat-title">Download Usage</div>
-        <div class="flex flex-row items-center">
-          <div class="stat-value text-secondary mr-3">2.5KB</div>
-          <span class="i-mdi-download w-8 py-4"></span>
-        </div>
-
-        <div class="stat-desc">Momentary use</div>
-      </div>
-
     </div>
+    <button class="btn btn-secondary " (click)="onClick()">Update</button>
 
-    <div class="overflow-x-auto scrollbar overflow-y-auto mt-7 mb-5 w-4/5">
+    <div class="overflow-x-auto scrollbar overflow-y-auto mb-5 w-4/5">
       <table class="table w-full">
         <!-- head -->
-        <thead class="sticky">
+        <thead class="">
           <tr>
             <th></th>
             <th>Name</th>
@@ -52,60 +56,14 @@
         </thead>
         <tbody>
           <!-- row 1 -->
-          <tr class="hover">
-            <th>1</th>
-            <td>Cy Ganderton</td>
-            <td>384.52KB</td>
-            <td>3231.52KB</td>
-            <td>24.52KB/s</td>
-            <td>31.52KB/s</td>
-            <td>16/05/2023</td>
-          </tr>
-          <tr class="hover">
-            <th>1</th>
-            <td>Cy Ganderton</td>
-            <td>384.52KB</td>
-            <td>3231.52KB</td>
-            <td>24.52KB/s</td>
-            <td>31.52KB/s</td>
-            <td>16/05/2023</td>
-          </tr>
-
-          <tr class="hover">
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>384.52KB</td>
-            <td>122.12KB</td>
-            <td>24.52KB/s</td>
-            <td>31.52KB/s</td>
-            <td>16/05/2023</td>
-          </tr>
-          <tr class="hover">
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>384.52KB</td>
-            <td>122.12KB</td>
-            <td>24.52KB/s</td>
-            <td>31.52KB/s</td>
-            <td>16/05/2023</td>
-          </tr>
-          <tr class="hover">
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>384.52KB</td>
-            <td>122.12KB</td>
-            <td>24.52KB/s</td>
-            <td>31.52KB/s</td>
-            <td>16/05/2023</td>
-          </tr>
-          <tr class="hover">
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>384.52KB</td>
-            <td>122.12KB</td>
-            <td>24.52KB/s</td>
-            <td>31.52KB/s</td>
-            <td>16/05/2023</td>
+          <tr *ngFor="let data of trafficData;  let i = index" class="hover">
+            <td>{{i}}</td>
+            <td>{{ data.name.split('.')[0] }}</td>
+            <td>{{ data.download }}</td>
+            <td>{{ data.upload }}</td>
+            <td>{{ data.download_speed }}</td>
+            <td>{{ data.upload_speed }}</td>
+            <td>{{ data.last_time_update }}</td>
           </tr>
 
         </tbody>

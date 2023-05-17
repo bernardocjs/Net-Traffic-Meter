@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { io } from 'socket.io-client';
+import { SocketService } from './services/socket.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { io } from 'socket.io-client';
 })
 export class AppComponent implements OnInit {
   title = 'frontEnd';
-
+  constructor(private socketService: SocketService) {}
   ngOnInit() {
     // Connect to each port
     // Para utilizar o traffic_analyzer_v2.py com esse exemplo, remova os números 50001 e 50002 do array abaixo:
@@ -28,12 +29,8 @@ export class AppComponent implements OnInit {
     });
 
     socket.on('data', (data: any) => {
-      console.log(JSON.stringify(data, null, 2));
-      // Handle received data
-    });
-
-    socket.on('hostnameTraffic', (data: any) => {
-      console.log(JSON.stringify(data, null, 2));
+      // console.log(JSON.stringify(data, null, 2));
+      this.socketService.deserializeInfo(data);
       // Handle received data
     });
 
