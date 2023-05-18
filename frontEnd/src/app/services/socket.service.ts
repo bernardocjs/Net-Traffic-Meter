@@ -22,6 +22,9 @@ export class SocketService {
 
   private appRanking: Subject<TrafficInfo[]> = new Subject<TrafficInfo[]>();
 
+  public email!: string;
+  public planSize!: string;
+
   getTrafficInfo(): Observable<TrafficInfo[]> {
     return this.trafficInfoSubject.asObservable();
   }
@@ -56,6 +59,14 @@ export class SocketService {
 
     this.mostExpensiveApp.next(this.mostExpensiveAppName(data));
     this.trafficInfoSubject.next(data);
+  }
+
+  updatePlan(planSize: string) {
+    this.planSize = planSize;
+  }
+
+  updateEmail(email: string) {
+    this.email = email;
   }
 
   parseDataFromFormat(download: string): number {

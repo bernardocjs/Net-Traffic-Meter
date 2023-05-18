@@ -13,7 +13,8 @@
           </label>
           <label class="input-group">
             <span>Plan</span>
-            <input type="text" placeholder="200GB" class="input input-bordered" />
+            <input type="text" [(ngModel)]="plan" placeholder="200GB" class="input input-bordered"
+              (blur)="onPlanChange()" />
           </label>
         </div>
         <div class="form-control mt-5">
@@ -22,11 +23,11 @@
           </label>
           <label class="input-group">
             <span>Email</span>
-            <input type="text" placeholder="john.doe@exaple.com" class="input input-bordered" />
+            <input type="text" [(ngModel)]="email" placeholder="john.doe@example.com" class="input input-bordered"
+              (blur)="onEmailChange()" />
           </label>
         </div>
+
       </div>
 
     </div>
-
-  </div>
