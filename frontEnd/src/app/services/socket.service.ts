@@ -12,15 +12,45 @@ export class SocketService {
   private trafficInfoSubject: Subject<TrafficInfo[]> = new Subject<
     TrafficInfo[]
   >();
-  private totalDownload: Subject<number> = new Subject<number>();
-  public downloadFromApplication: number = 0;
-  public downloadUsage: number = 0;
+  private totalInternet: Subject<string> = new Subject<string>();
+  public internetFromApp: number = 0;
+
+  private totalDownload: Subject<string> = new Subject<string>();
+  public downloadFromApp: number = 0;
+
+  private mostExpensiveApp: Subject<string> = new Subject<string>();
 
   getTrafficInfo(): Observable<TrafficInfo[]> {
     return this.trafficInfoSubject.asObservable();
   }
 
-  parseDownloadUsage(download: string): number {
+  getInternetUsage(): Observable<string> {
+    return this.totalInternet.asObservable();
+  }
+
+  getDownloadUsage(): Observable<string> {
+    return this.totalDownload.asObservable();
+  }
+
+  getMostExpensiveApp(): Observable<string> {
+    return this.mostExpensiveApp.asObservable();
+  }
+
+  deserializeInfo(data: TrafficInfo[]) {
+    if (!data) return;
+    this.internetSum(data);
+    this.totalInternet.next(this.formatData(this.internetFromApp));
+    this.internetFromApp = 0;
+
+    this.downloadSum(data);
+    this.totalDownload.next(this.formatData(this.downloadFromApp));
+    this.downloadFromApp = 0;
+
+    this.mostExpensiveApp.next(this.mostExpensiveAppName(data));
+    this.trafficInfoSubject.next(data);
+  }
+
+  parseDataFromFormat(download: string): number {
     const valueWithUnit = download.match(/[0-9.]+|[A-Za-z]+/g);
     if (!valueWithUnit) return 0;
     const value = parseFloat(valueWithUnit[0]);
@@ -40,18 +70,22 @@ export class SocketService {
     }
   }
 
-  getDownloadUsage(data: any): number {
-    if (!data) return 0;
-
-    const download = data.map((info: any) => {
-      this.downloadFromApplication += this.parseDownloadUsage(info.download);
-
-      return this.parseDownloadUsage(info.download);
+  downloadSum(data: TrafficInfo[]): void {
+    if (!data) return;
+    data.map((info: TrafficInfo) => {
+      this.downloadFromApp += this.parseDataFromFormat(info.download_speed);
     });
-    return download;
   }
 
-  formatDownloadSize(sizeInBytes: number): string {
+  internetSum(data: TrafficInfo[]): void {
+    if (!data) return;
+
+    data.map((info: TrafficInfo) => {
+      this.internetFromApp += this.parseDataFromFormat(info.download);
+    });
+  }
+
+  formatData(sizeInBytes: number): string {
     const units = ['B', 'KB', 'MB', 'GB'];
     let size = sizeInBytes;
     let unitIndex = 0;
@@ -64,12 +98,19 @@ export class SocketService {
     return size.toFixed(2) + units[unitIndex];
   }
 
-  deserializeInfo(data: any) {
-    if (!data) return;
-    this.totalDownload.next(this.getDownloadUsage(data));
-    console.log(this.downloadFromApplication);
-    console.log(this.formatDownloadSize(this.downloadFromApplication));
-    this.downloadFromApplication = 0;
-    this.trafficInfoSubject.next(data);
+  mostExpensiveAppName(trafficInfos: TrafficInfo[]): string {
+    let maxDownloadUsage = 0;
+    let mostDownloadedName!: string;
+
+    trafficInfos.map((info) => {
+      const downloadUsage = this.parseDataFromFormat(info.download);
+
+      if (downloadUsage >= maxDownloadUsage) {
+        maxDownloadUsage = downloadUsage;
+        mostDownloadedName = info.name;
+      }
+    });
+
+    return mostDownloadedName;
   }
 }

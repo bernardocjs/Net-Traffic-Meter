@@ -10,10 +10,22 @@ import { TrafficInfo } from '../interfaces/traffic-info';
 export class HomePageComponent implements OnInit {
   constructor(private socket: SocketService) {}
   trafficData!: TrafficInfo[];
+  internetUsed!: string;
+  downloadUsage!: string;
+  mostExpensiveApp!: string;
 
   ngOnInit(): void {
     this.socket.getTrafficInfo().subscribe((data: TrafficInfo[]) => {
       this.trafficData = data;
+    });
+    this.socket.getInternetUsage().subscribe((data: string) => {
+      this.internetUsed = data;
+    });
+    this.socket.getDownloadUsage().subscribe((data: string) => {
+      this.downloadUsage = data;
+    });
+    this.socket.getMostExpensiveApp().subscribe((data: string) => {
+      this.mostExpensiveApp = data;
     });
   }
 }
