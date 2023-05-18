@@ -5,18 +5,19 @@
       <div class="stats h-32 w-3/5 shadow overflow-hidden mb-10">
         <div class="stat flex flex-col justify-center items-center">
           <div class="stat-title ">Internet Usage</div>
-          <div class="flex flex-row items-center">
-            <div class="stat-value text-secondary mr-3">{{internetUsed}}</div>
+          <div class="flex flex-row items-center transition ease-in-out hover:scale-110 duration-300">
+            <div class="stat-value text-primary mr-3">
+              {{internetUsed}}</div>
             <span class="i-mdi-internet w-6 py-4"></span>
           </div>
-          <div class="stat-desc">Jan 1st - Feb 1st</div>
+          <div class="stat-desc">This Month</div>
         </div>
 
         <div class="stat flex flex-col justify-center items-center">
           <div class="stat-title">Most expensive</div>
-          <div class="flex flex-row items-center">
+          <div class="flex flex-row items-center transition ease-in-out hover:scale-110 duration-300">
             <div class="stat-value mr-3">{{mostExpensiveApp.split('.')[0]}}</div>
-            <span class="i-lucide-coins p-3 text-secondary"></span>
+            <span class="i-lucide-coins p-3 text-warning"></span>
           </div>
           <div class="stat-desc flex flex-row">
             <span class="i-mdi-sucess-outline text-success"></span>
@@ -28,7 +29,7 @@
         <div class="stat flex flex-col justify-center items-center">
 
           <div class="stat-title">Download Usage</div>
-          <div class="flex flex-row items-center">
+          <div class="flex flex-row items-center transition ease-in-out hover:scale-110 duration-300">
             <div class="stat-value text-secondary mr-3">{{downloadUsage}}/s</div>
             <span class="i-mdi-download w-8 py-4"></span>
           </div>
@@ -47,8 +48,8 @@
             <th></th>
             <th>Name</th>
             <th>Download</th>
-            <th>Upload</th>
             <th>Download Speed</th>
+            <th>Upload</th>
             <th>Upload Speed</th>
             <th>Last Updated</th>
             <th></th>
@@ -57,15 +58,15 @@
         <tbody>
           <!-- row 1 -->
           <tr *ngFor="let data of trafficData;  let i = index" class="hover" (click)="showDetails(i)">
-            <td>{{i}}</td>
+            <td class="text-primary font-bold">{{i}}</td>
             <td>{{ data.name.split('.')[0] }}</td>
             <td>{{ data.download }}</td>
-            <td>{{ data.upload }}</td>
             <td>{{ data.download_speed }}</td>
+            <td>{{ data.upload }}</td>
             <td>{{ data.upload_speed }}</td>
             <td>{{ data.last_time_update }}</td>
-            <td><label for="modal2" class="i-mdi-info-circle-outline p-2"></label>
-              <label for="modal" class="i-mdi-internet-protocol-outline p-2 ml-4"></label>
+            <td><label for="modal2" class="i-mdi-info-circle-outline text-success p-2"></label>
+              <label for="modal" class="i-mdi-internet-protocol-outline text-info p-2 ml-4"></label>
             </td>
           </tr>
 
