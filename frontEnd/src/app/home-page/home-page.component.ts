@@ -13,6 +13,7 @@ export class HomePageComponent implements OnInit {
   internetUsed!: string;
   downloadUsage!: string;
   mostExpensiveApp!: string;
+  selectedTrafficInfo: TrafficInfo | undefined;
 
   ngOnInit(): void {
     this.socket.getTrafficInfo().subscribe((data: TrafficInfo[]) => {
@@ -27,5 +28,9 @@ export class HomePageComponent implements OnInit {
     this.socket.getMostExpensiveApp().subscribe((data: string) => {
       this.mostExpensiveApp = data;
     });
+  }
+
+  showDetails(index: number): void {
+    this.selectedTrafficInfo = this.trafficData[index];
   }
 }
