@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TrafficInfo } from 'src/app/interfaces/traffic-info';
 
 @Component({
   selector: 'app-rank-card',
@@ -8,4 +9,7 @@ import { Component, Input } from '@angular/core';
 export class RankCardComponent {
   @Input()
   ranking!: number;
+
+  @Input()
+  app!: TrafficInfo;
 }

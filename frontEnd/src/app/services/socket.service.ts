@@ -20,6 +20,9 @@ export class SocketService {
 
   private mostExpensiveApp: Subject<string> = new Subject<string>();
 
+  private appRanking: Subject<TrafficInfo[]> = new Subject<TrafficInfo[]>();
+  private ranking: TrafficInfo[] = [];
+
   getTrafficInfo(): Observable<TrafficInfo[]> {
     return this.trafficInfoSubject.asObservable();
   }
@@ -36,6 +39,10 @@ export class SocketService {
     return this.mostExpensiveApp.asObservable();
   }
 
+  getRanking(): Observable<TrafficInfo[]> {
+    return this.appRanking.asObservable();
+  }
+
   deserializeInfo(data: TrafficInfo[]) {
     if (!data) return;
     this.internetSum(data);
@@ -45,6 +52,8 @@ export class SocketService {
     this.downloadSum(data);
     this.totalDownload.next(this.formatData(this.downloadFromApp));
     this.downloadFromApp = 0;
+
+    this.appRanking.next(this.sortMostExpensive(data));
 
     this.mostExpensiveApp.next(this.mostExpensiveAppName(data));
     this.trafficInfoSubject.next(data);
@@ -110,7 +119,20 @@ export class SocketService {
         mostDownloadedName = info.name;
       }
     });
-
     return mostDownloadedName;
+  }
+
+  sortMostExpensive(trafficInfos: TrafficInfo[]): TrafficInfo[] {
+    const sortedTrafficInfos = [...trafficInfos].sort((a, b) => {
+      const costA =
+        this.parseDataFromFormat(a.download) *
+        this.parseDataFromFormat(a.upload);
+      const costB =
+        this.parseDataFromFormat(b.download) *
+        this.parseDataFromFormat(b.upload);
+
+      return costB - costA; // Sort in descending order
+    });
+    return sortedTrafficInfos.slice(0, 5);
   }
 }

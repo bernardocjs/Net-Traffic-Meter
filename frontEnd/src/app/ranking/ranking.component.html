@@ -3,12 +3,7 @@
     <h1 class="text-3xl font-bold mb-8">Ranking</h1>
 
     <div class=" w-full h-full ">
-      <app-rank-card [ranking]="1"></app-rank-card>
-      <app-rank-card [ranking]="2"></app-rank-card>
-      <app-rank-card [ranking]="3"></app-rank-card>
-      <app-rank-card [ranking]="4"></app-rank-card>
-      <app-rank-card [ranking]="5"></app-rank-card>
-
+      <app-rank-card *ngFor="let app of podium; let i = index" [ranking]="i" [app]="app"></app-rank-card>
     </div>
   </div>
 
