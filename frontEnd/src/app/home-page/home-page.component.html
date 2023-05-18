@@ -6,7 +6,7 @@
         <div class="stat flex flex-col justify-center items-center">
           <div class="stat-title ">Internet Usage</div>
           <div class="flex flex-row items-center">
-            <div class="stat-value text-secondary mr-3">31K</div>
+            <div class="stat-value text-secondary mr-3">{{internetUsed}}</div>
             <span class="i-mdi-internet w-6 py-4"></span>
           </div>
           <div class="stat-desc">Jan 1st - Feb 1st</div>
@@ -15,7 +15,7 @@
         <div class="stat flex flex-col justify-center items-center">
           <div class="stat-title">Most expensive</div>
           <div class="flex flex-row items-center">
-            <div class="stat-value mr-3">Discord</div>
+            <div class="stat-value mr-3">{{mostExpensiveApp.split('.')[0]}}</div>
             <span class="i-lucide-coins p-3 text-secondary"></span>
           </div>
           <div class="stat-desc flex flex-row">
@@ -29,7 +29,7 @@
 
           <div class="stat-title">Download Usage</div>
           <div class="flex flex-row items-center">
-            <div class="stat-value text-secondary mr-3">2.5KB</div>
+            <div class="stat-value text-secondary mr-3">{{downloadUsage}}/s</div>
             <span class="i-mdi-download w-8 py-4"></span>
           </div>
 
