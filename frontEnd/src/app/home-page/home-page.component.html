@@ -64,7 +64,9 @@
             <td>{{ data.download_speed }}</td>
             <td>{{ data.upload_speed }}</td>
             <td>{{ data.last_time_update }}</td>
-            <td><label for="modal" class="i-mdi-info-circle-outline p-2"></label></td>
+            <td><label for="modal2" class="i-mdi-info-circle-outline p-2"></label>
+              <label for="modal" class="i-mdi-internet-protocol-outline p-2 ml-4"></label>
+            </td>
           </tr>
 
         </tbody>
@@ -89,6 +91,35 @@
                 <tbody>
                   <tr *ngFor="let host of selectedTrafficInfo?.host_traffic">
                     <th>{{host.host}}</th>
+                    <td>{{host.download}}</td>
+                    <td>{{host.upload}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </label>
+    </label>
+
+    <input type="checkbox" id="modal2" class="modal-toggle scrollbar" />
+    <label for="modal2" class="modal scrollbar cursor-pointer">
+      <label class="modal-box scrollbar relative w-screen" for="">
+        <h3 class="text-lg font-bold mb-3">App: {{selectedTrafficInfo?.name}}</h3>
+        <div class="flex flex-col scrollbar justify-center">
+          <div class="flex flex-col justify-center">
+            <div class="overflow-x-auto scrollbar">
+              <table class="table table-compact  w-full">
+                <thead>
+                  <tr>
+                    <th>host</th>
+                    <th>download</th>
+                    <th>upload</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let host of selectedTrafficInfo?.protocol_traffic">
+                    <th>{{host.protocol}}</th>
                     <td>{{host.download}}</td>
                     <td>{{host.upload}}</td>
                   </tr>

@@ -21,7 +21,6 @@ export class SocketService {
   private mostExpensiveApp: Subject<string> = new Subject<string>();
 
   private appRanking: Subject<TrafficInfo[]> = new Subject<TrafficInfo[]>();
-  private ranking: TrafficInfo[] = [];
 
   getTrafficInfo(): Observable<TrafficInfo[]> {
     return this.trafficInfoSubject.asObservable();
