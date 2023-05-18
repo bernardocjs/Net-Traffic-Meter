@@ -1,10 +1,13 @@
 <div class="bg-base-100 shadow-md rounded-lg h-20 my-2 mx-5 flex items-center">
-  <span
-    [ngClass]="{'i-mdi-number-1-circle p-3 ml-5 text-error': ranking === 1, 'i-mdi-number-2-circle p-3 ml-5': ranking === 2, 'i-mdi-number-3-circle p-3 ml-5 text-error': ranking === 3 }"></span>
+  <span [ngClass]="{'i-mdi-number-1-circle p-3 ml-5 text-error': ranking ===0 }"></span>
+  <span [ngClass]="{'i-mdi-number-2-circle p-3 ml-5 text-warning': ranking === 1 }"></span>
+  <span [ngClass]="{'i-mdi-number-3-circle p-3 ml-5 text-secondary': ranking === 2 }"></span>
+  <span [ngClass]="{'i-mdi-number-4-circle p-3 ml-5 text-white': ranking === 3 }"></span>
+  <span [ngClass]="{'i-mdi-number-5-circle p-3 ml-5 text-white': ranking === 4 }"></span>
   <div class="flex flex-row justify-between items-center w-full">
     <div class="p-8">
       <h1 class="font-bold">
-        Nome
+        {{app.name.split('.')[0]}}
       </h1>
       <div class="flex flex-row">
         <h2 class="font-extralight">last_time_update</h2>
@@ -15,7 +18,7 @@
         Download
       </h1>
       <div class="flex flex-row">
-        <h2 class="font-extralight">100KB</h2>
+        <h2 class="font-extralight">{{app.download}}</h2>
       </div>
     </div>
     <div class="p-8">
@@ -23,7 +26,7 @@
         Upload
       </h1>
       <div class="flex flex-row">
-        <h2 class="font-extralight">150KB</h2>
+        <h2 class="font-extralight">{{app.upload}}</h2>
       </div>
     </div>
     <div class=" mx-5 flex justify-end items-center ">
