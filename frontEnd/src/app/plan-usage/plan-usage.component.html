@@ -7,7 +7,12 @@
         <div class="radial-progress text-primary text-3xl mb-12"
           style="--value:{{internetUsedPercentage}}; --size:24rem; --thickness: 5px;"
           [ngClass]="{hidden: internetUsedPercentage === 0}">
-          <p class="font-bold text-4xl">{{internetUsage}}</p>
+          <div class="flex flex-row items-end">
+            <h1 class="font-bold text-4xl">{{internetUsage}}
+            </h1>
+            <p class="font-normal text-base text-gray-500">/{{planFromSocket}}</p>
+          </div>
+
         </div>
         <div class="flex flex-col justify-center items-center">
           <div class="radial-progress text-primary text-3xl mb-12" style="--value:100; --size:24rem; --thickness: 5px;"
@@ -15,7 +20,7 @@
             <p class="font-bold text-4xl">{{internetUsage}}</p>
           </div>
           <h1 class="font-light text-4xl mb-3" [ngClass]="{hidden: internetUsedPercentage !== 0}">
-            Selecione um Plano
+            Select a Plan
           </h1>
         </div>
 

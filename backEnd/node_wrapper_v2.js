@@ -36,6 +36,8 @@ http.listen(8000, () => {
 
 app.post("/send-email", (req, res) => {
   const to = req.body.to;
+  const subject = req.body.subject;
+  const text = req.body.text;
   // Create a transporter using your email service provider's SMTP settings
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -51,8 +53,8 @@ app.post("/send-email", (req, res) => {
   const mailOptions = {
     from: "hackthon2023viasat@gmail.com",
     to: to,
-    subject: "Viasat: Internet Plan Limit",
-    text: "You are close to exceeding the internet plan limit",
+    subject: subject,
+    text: text,
   };
 
   // Send the email

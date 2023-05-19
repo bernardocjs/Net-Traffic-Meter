@@ -5,17 +5,19 @@ import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-l
 import { CenteredContentLayoutComponent } from './layouts/centered-content-layout/centered-content-layout.component';
 import { RankingComponent } from './ranking/ranking.component';
 import { PlanUsageComponent } from './plan-usage/plan-usage.component';
+import { LoginComponent } from './login/login.component';
 
 export enum Pages {
   Home = 'home',
   Ranking = 'ranking',
   PlanUsage = 'planUsage',
+  Login = 'login',
 }
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: Pages.Home,
+    redirectTo: Pages.Login,
     pathMatch: 'full',
   },
 
@@ -35,14 +37,11 @@ const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: '',
-  //   component: CenteredContentLayoutComponent,
-  //   children: [
-  //     { path: 'login', component: LoginComponent },
-  //     { path: 'register', component: RegisterComponent },
-  //   ],
-  // },
+  {
+    path: '',
+    component: CenteredContentLayoutComponent,
+    children: [{ path: 'login', component: LoginComponent }],
+  },
   {
     path: Pages.Home,
     loadChildren: () =>

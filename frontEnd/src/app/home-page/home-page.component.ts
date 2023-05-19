@@ -14,6 +14,7 @@ export class HomePageComponent implements OnInit {
   downloadUsage!: string;
   mostExpensiveApp!: string;
   selectedTrafficInfo: TrafficInfo | undefined;
+  sortKey!: string;
 
   ngOnInit(): void {
     this.socket.getTrafficInfo().subscribe((data: TrafficInfo[]) => {
@@ -28,9 +29,17 @@ export class HomePageComponent implements OnInit {
     this.socket.getMostExpensiveApp().subscribe((data: string) => {
       this.mostExpensiveApp = data;
     });
+    this.socket.getSortKey().subscribe((data: string) => {
+      this.sortKey = data;
+    });
   }
 
   showDetails(index: number): void {
     this.selectedTrafficInfo = this.trafficData[index];
+  }
+
+  sort(key: string) {
+    console.log(key);
+    this.socket.sortKey = key;
   }
 }

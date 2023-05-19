@@ -10,7 +10,7 @@
               {{internetUsed}}</div>
             <span class="i-mdi-internet w-6 py-4"></span>
           </div>
-          <div class="stat-desc">This Month</div>
+          <div class="stat-desc">This Period</div>
         </div>
 
         <div class="stat flex flex-col justify-center items-center">
@@ -46,12 +46,25 @@
         <thead class="">
           <tr>
             <th></th>
-            <th>Name</th>
-            <th>Download</th>
-            <th>Download Speed</th>
-            <th>Upload</th>
-            <th>Upload Speed</th>
-            <th>Last Updated</th>
+            <th (click)="sort('name')">
+              Name
+              <span class="i-mdi-sort-variant" [ngClass]="{hidden: sortKey!=='name'}"></span>
+            </th>
+            <th (click)="sort('download')">Download
+              <span class="i-mdi-sort-variant" [ngClass]="{hidden: sortKey!=='download'}"></span>
+            </th>
+            <th (click)="sort('download_speed')">Download Speed
+              <span class="i-mdi-sort-variant" [ngClass]="{hidden: sortKey!=='download_speed'}"></span>
+            </th>
+            <th (click)="sort('upload')">Upload
+              <span class="i-mdi-sort-variant" [ngClass]="{hidden: sortKey!=='upload'}"></span>
+            </th>
+            <th (click)="sort('upload_speed')">Upload Speed
+              <span class="i-mdi-sort-variant" [ngClass]="{hidden: sortKey!=='upload_speed'}"></span>
+            </th>
+            <th (click)="sort('last_time_update')">Last Updated
+              <span class="i-mdi-sort-variant" [ngClass]="{hidden: sortKey!=='last_time_update'}"></span>
+            </th>
             <th></th>
           </tr>
         </thead>
@@ -65,8 +78,10 @@
             <td>{{ data.upload }}</td>
             <td>{{ data.upload_speed }}</td>
             <td>{{ data.last_time_update }}</td>
-            <td><label for="modal2" class="i-mdi-info-circle-outline text-success p-2"></label>
-              <label for="modal" class="i-mdi-internet-protocol-outline text-info p-2 ml-4"></label>
+            <td><label for="modal2"
+                class="i-mdi-info-circle-outline text-success hover:scale-125 duration-300 p-2"></label>
+              <label for="modal"
+                class="i-mdi-internet-protocol-outline text-info hover:scale-125 duration-300 p-2 ml-4"></label>
             </td>
           </tr>
 
@@ -113,7 +128,7 @@
               <table class="table table-compact  w-full">
                 <thead>
                   <tr>
-                    <th>host</th>
+                    <th>protocol</th>
                     <th>download</th>
                     <th>upload</th>
                   </tr>
