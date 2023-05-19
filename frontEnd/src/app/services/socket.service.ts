@@ -14,17 +14,18 @@ export class SocketService {
   >();
   private totalInternet: Subject<string> = new Subject<string>();
   private totalInternetInPorcentage: Subject<number> = new Subject<number>();
-  public internetFromApp: number = 0;
-
-  sizePlan!: number;
-
-  private totalDownload: Subject<string> = new Subject<string>();
-  public downloadFromApp: number = 0;
-
   private mostExpensiveApp: Subject<string> = new Subject<string>();
   private appRanking: Subject<TrafficInfo[]> = new Subject<TrafficInfo[]>();
   private key: Subject<string> = new Subject<string>();
   private plan: Subject<string> = new Subject<string>();
+  private totalDownload: Subject<string> = new Subject<string>();
+
+  public internetFromApp: number = 0;
+
+  sizePlan!: number;
+
+  public downloadFromApp: number = 0;
+
   private planAux!: string;
 
   public email!: string;
@@ -273,14 +274,15 @@ export class SocketService {
   sortMostExpensive(trafficInfos: TrafficInfo[]): TrafficInfo[] {
     const sortedTrafficInfos = [...trafficInfos].sort((a, b) => {
       const costA =
-        this.parseDataFromFormat(a.download) *
+        this.parseDataFromFormat(a.download) +
         this.parseDataFromFormat(a.upload);
       const costB =
-        this.parseDataFromFormat(b.download) *
+        this.parseDataFromFormat(b.download) +
         this.parseDataFromFormat(b.upload);
 
       return costB - costA; // Sort in descending order
     });
+    console.log(sortedTrafficInfos.slice(0, 5));
     return sortedTrafficInfos.slice(0, 5);
   }
 }
