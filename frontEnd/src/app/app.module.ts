@@ -7,10 +7,17 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { FormsModule } from '@angular/forms';
 import { LayoutsModule } from './layouts/layouts.module';
 import { SocketService } from './services/socket.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, HomePageComponent],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, LayoutsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    LayoutsModule,
+    HttpClientModule,
+  ],
   providers: [SocketService],
   bootstrap: [AppComponent],
 })

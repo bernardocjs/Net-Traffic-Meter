@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../services/socket.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-plan-usage',
@@ -12,16 +13,14 @@ export class PlanUsageComponent implements OnInit {
   plan: any = '500KB';
   email!: any;
   internetUsage!: string;
-  constructor(private socket: SocketService) {}
+  constructor(private socket: SocketService, private http: HttpClient) {}
   ngOnInit() {
     this.socket.getInternetUsageInPorcentage().subscribe((data: number) => {
       this.internetUsedPercentage = data;
-      console.log(this.internetUsedPercentage);
     });
 
     this.socket.getInternetUsage().subscribe((data: string) => {
       this.internetUsage = data;
-      console.log(this.internetUsage);
     });
   }
 
@@ -36,5 +35,25 @@ export class PlanUsageComponent implements OnInit {
   onEmailChange() {
     console.log('Email:', this.email);
     // Perform any other desired actions
+  }
+
+  sendEmail() {
+    const emailTry = {
+      to: 'hackthon2023viasat@gmail.com',
+      subject: 'Email Subject',
+      text: 'Email Text',
+    };
+    const emailData = emailTry;
+    console.log(this.email);
+    this.http.post('http://localhost:8000/send-email', emailData).subscribe(
+      () => {
+        console.log('Email sent successfully!');
+        // Handle success
+      },
+      (error) => {
+        console.error('An error occurred while sending the email:', error);
+        // Handle error
+      }
+    );
   }
 }

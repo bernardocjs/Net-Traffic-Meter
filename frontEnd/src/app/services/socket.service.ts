@@ -58,14 +58,12 @@ export class SocketService {
 
   getPlanPorcentage(): number {
     if (!this.sizePlan) return 0;
-    console.log(this.sizePlan);
     return (this.internetFromApp / this.sizePlan) * 100;
   }
 
   setPlanSize(plan: string) {
     this.sizePlan = this.parseDataFromFormat(plan);
     this.plan.next(plan);
-    console.log(this.sizePlan);
   }
 
   deserializeInfo(data: TrafficInfo[]) {
