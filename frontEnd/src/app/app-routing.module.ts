@@ -4,10 +4,12 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 import { CenteredContentLayoutComponent } from './layouts/centered-content-layout/centered-content-layout.component';
 import { RankingComponent } from './ranking/ranking.component';
+import { PlanUsageComponent } from './plan-usage/plan-usage.component';
 
 export enum Pages {
   Home = 'home',
   Ranking = 'ranking',
+  PlanUsage = 'planUsage',
 }
 
 const routes: Routes = [
@@ -26,6 +28,10 @@ const routes: Routes = [
       {
         path: Pages.Ranking,
         component: RankingComponent,
+      },
+      {
+        path: Pages.PlanUsage,
+        component: PlanUsageComponent,
       },
     ],
   },
@@ -46,6 +52,11 @@ const routes: Routes = [
     path: Pages.Ranking,
     loadChildren: () =>
       import('./ranking/ranking.module').then((m) => m.RankingModule),
+  },
+  {
+    path: Pages.PlanUsage,
+    loadChildren: () =>
+      import('./plan-usage/plan-usage.module').then((m) => m.PlanUsageModule),
   },
   // {
   //   path: 'login',
