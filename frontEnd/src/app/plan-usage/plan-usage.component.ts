@@ -10,6 +10,7 @@ export class PlanUsageComponent implements OnInit {
   internetUsedPercentage: number = 89;
   planEvent!: any;
   plan: any = '500KB';
+  planFromSocket!: string;
   email!: any;
   internetUsage!: string;
   constructor(private socket: SocketService) {}
@@ -20,6 +21,10 @@ export class PlanUsageComponent implements OnInit {
 
     this.socket.getInternetUsage().subscribe((data: string) => {
       this.internetUsage = data;
+    });
+
+    this.socket.getPlan().subscribe((data: string) => {
+      this.planFromSocket = data;
     });
   }
 

@@ -24,6 +24,7 @@ export class SocketService {
   private mostExpensiveApp: Subject<string> = new Subject<string>();
   private appRanking: Subject<TrafficInfo[]> = new Subject<TrafficInfo[]>();
   private plan: Subject<string> = new Subject<string>();
+  private planAux!: string;
 
   public email!: string;
   public emailSent = false;
@@ -89,6 +90,7 @@ export class SocketService {
 
   setPlanSize(plan: string) {
     this.sizePlan = this.parseDataFromFormat(plan);
+    this.planAux = plan;
     this.plan.next(plan);
   }
 
@@ -105,6 +107,7 @@ export class SocketService {
     this.downloadFromApp = 0;
 
     this.appRanking.next(this.sortMostExpensive(data));
+    this.plan.next(this.planAux);
 
     this.mostExpensiveApp.next(this.mostExpensiveAppName(data));
     this.trafficInfoSubject.next(data);
