@@ -46,12 +46,12 @@
         <thead class="">
           <tr>
             <th></th>
-            <th>Name</th>
-            <th>Download</th>
-            <th>Download Speed</th>
-            <th>Upload</th>
-            <th>Upload Speed</th>
-            <th>Last Updated</th>
+            <th (click)="sort('name')">Name</th>
+            <th (click)="sort('download')">Download</th>
+            <th (click)="sort('download_speed')">Download Speed</th>
+            <th (click)="sort('upload')">Upload</th>
+            <th (click)="sort('upload_speed')">Upload Speed</th>
+            <th (click)="sort('last_time_update')">Last Updated</th>
             <th></th>
           </tr>
         </thead>

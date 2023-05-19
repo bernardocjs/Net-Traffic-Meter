@@ -14,6 +14,8 @@ export class HomePageComponent implements OnInit {
   downloadUsage!: string;
   mostExpensiveApp!: string;
   selectedTrafficInfo: TrafficInfo | undefined;
+  sortColumn: string = '';
+  sortDirection: string = 'asc'; // Default sorting direction
 
   ngOnInit(): void {
     this.socket.getTrafficInfo().subscribe((data: TrafficInfo[]) => {
@@ -32,5 +34,10 @@ export class HomePageComponent implements OnInit {
 
   showDetails(index: number): void {
     this.selectedTrafficInfo = this.trafficData[index];
+  }
+
+  sort(key: string) {
+    console.log(key);
+    this.socket.sortKey = key;
   }
 }

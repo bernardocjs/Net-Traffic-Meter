@@ -29,6 +29,7 @@ export class SocketService {
   public email!: string;
   public emailSent = false;
   public planSize!: string;
+  public sortKey!: string;
 
   getTrafficInfo(): Observable<TrafficInfo[]> {
     return this.trafficInfoSubject.asObservable();
@@ -110,7 +111,68 @@ export class SocketService {
     this.plan.next(this.planAux);
 
     this.mostExpensiveApp.next(this.mostExpensiveAppName(data));
-    this.trafficInfoSubject.next(data);
+    this.trafficInfoSubject.next(this.sort(this.sortKey, data));
+  }
+
+  sort(sortType: string, data: TrafficInfo[]): TrafficInfo[] {
+    data.sort((a: TrafficInfo, b: TrafficInfo) => {
+      if (sortType === 'name') {
+        if (a.name < b.name) return -1;
+        if (a.name > b.name) return 1;
+      } else if (sortType === 'create_time') {
+        if (a.create_time < b.create_time) return -1;
+        if (a.create_time > b.create_time) return 1;
+      } else if (sortType === 'last_time_update') {
+        if (a.last_time_update < b.last_time_update) return -1;
+        if (a.last_time_update > b.last_time_update) return 1;
+      } else if (sortType === 'upload') {
+        if (
+          this.parseDataFromFormat(a.upload) <
+          this.parseDataFromFormat(b.upload)
+        )
+          return 1;
+        if (
+          this.parseDataFromFormat(a.upload) >
+          this.parseDataFromFormat(b.upload)
+        )
+          return -1;
+      } else if (sortType === 'download') {
+        if (
+          this.parseDataFromFormat(a.download) <
+          this.parseDataFromFormat(b.download)
+        )
+          return 1;
+        if (
+          this.parseDataFromFormat(a.download) >
+          this.parseDataFromFormat(b.download)
+        )
+          return -1;
+      } else if (sortType === 'upload_speed') {
+        if (
+          this.parseDataFromFormat(a.upload_speed) <
+          this.parseDataFromFormat(b.upload_speed)
+        )
+          return 1;
+        if (
+          this.parseDataFromFormat(a.upload_speed) >
+          this.parseDataFromFormat(b.upload_speed)
+        )
+          return -1;
+      } else if (sortType === 'download_speed') {
+        if (
+          this.parseDataFromFormat(a.download_speed) <
+          this.parseDataFromFormat(b.download_speed)
+        )
+          return 1;
+        if (
+          this.parseDataFromFormat(a.download_speed) >
+          this.parseDataFromFormat(b.download_speed)
+        )
+          return -1;
+      }
+      return 0;
+    });
+    return data;
   }
 
   updatePlan(planSize: string) {
