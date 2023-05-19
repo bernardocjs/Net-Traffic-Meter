@@ -142,8 +142,8 @@ export class SocketService {
   sort(sortType: string, data: TrafficInfo[]): TrafficInfo[] {
     data.sort((a: TrafficInfo, b: TrafficInfo) => {
       if (sortType === 'name') {
-        if (a.name < b.name) return -1;
-        if (a.name > b.name) return 1;
+        if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+        if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
       } else if (sortType === 'create_time') {
         if (a.create_time < b.create_time) return -1;
         if (a.create_time > b.create_time) return 1;
