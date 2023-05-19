@@ -13,14 +13,17 @@ export class SocketService {
     TrafficInfo[]
   >();
   private totalInternet: Subject<string> = new Subject<string>();
+  private totalInternetInPorcentage: Subject<number> = new Subject<number>();
   public internetFromApp: number = 0;
+
+  sizePlan!: number;
 
   private totalDownload: Subject<string> = new Subject<string>();
   public downloadFromApp: number = 0;
 
   private mostExpensiveApp: Subject<string> = new Subject<string>();
-
   private appRanking: Subject<TrafficInfo[]> = new Subject<TrafficInfo[]>();
+  private plan: Subject<string> = new Subject<string>();
 
   public email!: string;
   public planSize!: string;
@@ -31,6 +34,10 @@ export class SocketService {
 
   getInternetUsage(): Observable<string> {
     return this.totalInternet.asObservable();
+  }
+
+  getInternetUsageInPorcentage(): Observable<number> {
+    return this.totalInternetInPorcentage.asObservable();
   }
 
   getDownloadUsage(): Observable<string> {
@@ -45,9 +52,27 @@ export class SocketService {
     return this.appRanking.asObservable();
   }
 
+  getPlan(): Observable<string> {
+    return this.plan.asObservable();
+  }
+
+  getPlanPorcentage(): number {
+    if (!this.sizePlan) return 0;
+    console.log(this.sizePlan);
+    return (this.internetFromApp / this.sizePlan) * 100;
+  }
+
+  setPlanSize(plan: string) {
+    this.sizePlan = this.parseDataFromFormat(plan);
+    this.plan.next(plan);
+    console.log(this.sizePlan);
+  }
+
   deserializeInfo(data: TrafficInfo[]) {
     if (!data) return;
     this.internetSum(data);
+    this.totalInternetInPorcentage.next(this.getPlanPorcentage());
+
     this.totalInternet.next(this.formatData(this.internetFromApp));
     this.internetFromApp = 0;
 
