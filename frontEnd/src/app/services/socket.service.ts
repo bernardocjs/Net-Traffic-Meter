@@ -23,6 +23,7 @@ export class SocketService {
 
   private mostExpensiveApp: Subject<string> = new Subject<string>();
   private appRanking: Subject<TrafficInfo[]> = new Subject<TrafficInfo[]>();
+  private key: Subject<string> = new Subject<string>();
   private plan: Subject<string> = new Subject<string>();
   private planAux!: string;
 
@@ -30,6 +31,10 @@ export class SocketService {
   public emailSent = false;
   public planSize!: string;
   public sortKey!: string;
+
+  getSortKey(): Observable<string> {
+    return this.key.asObservable();
+  }
 
   getTrafficInfo(): Observable<TrafficInfo[]> {
     return this.trafficInfoSubject.asObservable();
@@ -112,6 +117,7 @@ export class SocketService {
 
     this.mostExpensiveApp.next(this.mostExpensiveAppName(data));
     this.trafficInfoSubject.next(this.sort(this.sortKey, data));
+    this.key.next(this.sortKey);
   }
 
   sort(sortType: string, data: TrafficInfo[]): TrafficInfo[] {
