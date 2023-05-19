@@ -16,17 +16,15 @@ export class PlanUsageComponent implements OnInit {
   ngOnInit() {
     this.socket.getInternetUsageInPorcentage().subscribe((data: number) => {
       this.internetUsedPercentage = data;
-      console.log(this.internetUsedPercentage);
     });
 
     this.socket.getInternetUsage().subscribe((data: string) => {
       this.internetUsage = data;
-      console.log(this.internetUsage);
     });
   }
 
   onPlanChange() {
-    console.log('Plan:', this.plan);
+    if (!this.planEvent) return;
     this.plan = this.planEvent;
     this.socket.setPlanSize(this.plan);
 
@@ -34,7 +32,14 @@ export class PlanUsageComponent implements OnInit {
   }
 
   onEmailChange() {
+    if (!this.email) return;
     console.log('Email:', this.email);
+    this.socket.updateEmail(this.email);
     // Perform any other desired actions
+  }
+
+  sendEmail() {
+    if (!this.email) return;
+    this.socket.sendEmail();
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { io } from 'socket.io-client';
+import { HttpClient } from '@angular/common/http';
 import { TrafficInfo } from '../interfaces/traffic-info';
 import { Observable, Subject } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class SocketService {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   private trafficInfoSubject: Subject<TrafficInfo[]> = new Subject<
     TrafficInfo[]
@@ -26,6 +26,7 @@ export class SocketService {
   private plan: Subject<string> = new Subject<string>();
 
   public email!: string;
+  public emailSent = false;
   public planSize!: string;
 
   getTrafficInfo(): Observable<TrafficInfo[]> {
@@ -58,14 +59,37 @@ export class SocketService {
 
   getPlanPorcentage(): number {
     if (!this.sizePlan) return 0;
-    console.log(this.sizePlan);
-    return (this.internetFromApp / this.sizePlan) * 100;
+    const percentage = (this.internetFromApp / this.sizePlan) * 100;
+    if (!this.emailSent && percentage >= 100) {
+      this.sendEmail();
+      this.emailSent = true;
+    }
+    return percentage;
+  }
+
+  sendEmail() {
+    const emailTry = {
+      to: 'hackthon2023viasat@gmail.com',
+      subject: 'Email Subject',
+      text: 'Email Text',
+    };
+    const emailData = emailTry;
+    console.log(this.email);
+    this.http.post('http://localhost:8000/send-email', emailData).subscribe(
+      () => {
+        console.log('Email sent successfully!');
+        // Handle success
+      },
+      (error) => {
+        console.error('An error occurred while sending the email:', error);
+        // Handle error
+      }
+    );
   }
 
   setPlanSize(plan: string) {
     this.sizePlan = this.parseDataFromFormat(plan);
     this.plan.next(plan);
-    console.log(this.sizePlan);
   }
 
   deserializeInfo(data: TrafficInfo[]) {
