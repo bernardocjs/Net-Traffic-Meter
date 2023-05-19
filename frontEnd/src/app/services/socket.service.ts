@@ -28,7 +28,8 @@ export class SocketService {
   private planAux!: string;
 
   public email!: string;
-  public emailSent = false;
+  public warningEmailSent = false;
+  public endEmailSent = false;
   public planSize!: string;
   public sortKey!: string;
 
@@ -67,21 +68,38 @@ export class SocketService {
   getPlanPorcentage(): number {
     if (!this.sizePlan) return 0;
     const percentage = (this.internetFromApp / this.sizePlan) * 100;
-    if (!this.emailSent && percentage >= 100) {
-      this.sendEmail();
-      this.emailSent = true;
+    if (!this.warningEmailSent && percentage >= 80) {
+      this.sendEmail('warning');
+      this.warningEmailSent = true;
+    } else if (!this.endEmailSent && percentage >= 100) {
+      this.sendEmail('end');
+      this.endEmailSent = true;
     }
     return percentage;
   }
 
-  sendEmail() {
-    const emailTry = {
-      to: 'hackthon2023viasat@gmail.com',
-      subject: 'Email Subject',
-      text: 'Email Text',
+  sendEmail(type: string) {
+    let emailTry = {
+      to: '',
+      subject: '',
+      text: '',
     };
+    if (type === 'warning') {
+      emailTry = {
+        to: 'hackthon2023viasat@gmail.com',
+        subject: 'Important: Exceeded Internet Data Usage Alert',
+        text: "We wanted to notify you that your current Internet plan's data usage has nearly reached its limit. please checkout our platform",
+      };
+    } else {
+      emailTry = {
+        to: 'hackthon2023viasat@gmail.com',
+        subject: 'Important: Data Max Usage Reached',
+        text: "We wanted to notify you that your current Internet plan's data usage has reached reached its limit. please checkout our platform",
+      };
+    }
+
     const emailData = emailTry;
-    console.log(this.email);
+    console.log(this.email, emailTry);
     this.http.post('http://localhost:8000/send-email', emailData).subscribe(
       () => {
         console.log('Email sent successfully!');

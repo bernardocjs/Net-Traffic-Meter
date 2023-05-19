@@ -42,9 +42,4 @@ export class PlanUsageComponent implements OnInit {
     this.socket.updateEmail(this.email);
     // Perform any other desired actions
   }
-
-  sendEmail() {
-    if (!this.email) return;
-    this.socket.sendEmail();
-  }
 }
