@@ -1,0 +1,59 @@
+<label for="modal">
+  <div class=" transition ease-in-out hover:scale-105 duration-500">
+
+
+    <div class="bg-base-100 shadow-md rounded-lg h-20 my-2 mx-5 flex items-center">
+      <span [ngClass]="{'i-mdi-number-1-circle p-3 ml-5 text-error': ranking ===0 }"></span>
+      <span [ngClass]="{'i-mdi-number-2-circle p-3 ml-5 text-warning': ranking === 1 }"></span>
+      <span [ngClass]="{'i-mdi-number-3-circle p-3 ml-5 text-success': ranking === 2 }"></span>
+      <span [ngClass]="{'i-mdi-number-4-circle p-3 ml-5 text-white': ranking === 3 }"></span>
+      <span [ngClass]="{'i-mdi-number-5-circle p-3 ml-5 text-white': ranking === 4 }"></span>
+      <div class="flex flex-row justify-between items-center w-full">
+        <div class="p-8">
+          <h1 class="font-bold">
+            {{app.name.split('.')[0]}}
+          </h1>
+          <div class="flex flex-row">
+            <h2 class="font-light">{{app.last_time_update}}</h2>
+          </div>
+        </div>
+        <div class="p-8">
+          <h1 class="font-bold text-primary">
+            Download
+          </h1>
+          <div class="flex flex-row">
+            <h2 class="font-light">{{app.download}}</h2>
+          </div>
+        </div>
+        <div class="p-8">
+          <h1 class="font-bold text-primary">
+            Download Speed
+          </h1>
+          <div class="flex flex-row">
+            <h2 class="font-light">{{app.download_speed}}</h2>
+          </div>
+        </div>
+        <div class="p-8">
+          <h1 class="font-bold text-secondary">
+            Upload
+          </h1>
+          <div class="flex flex-row">
+            <h2 class="font-light">{{app.upload}}</h2>
+          </div>
+        </div>
+        <div class="p-8">
+          <h1 class="font-bold text-secondary">
+            Upload Speed
+          </h1>
+          <div class="flex flex-row">
+            <h2 class="font-light">{{app.upload_speed}}</h2>
+          </div>
+        </div>
+        <div class=" mx-5 flex justify-end items-center ">
+          <span class="i-mdi-arrow-right p-3"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</label>

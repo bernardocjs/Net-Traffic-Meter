@@ -1,0 +1,151 @@
+<div class="flex justify-center h-screen min-h-5/6 bg-neutral rounded-2xl">
+  <div class="my-20 w-full h-4/5 flex flex-col overflow-y-hidden items-center">
+
+    <div class="flex flex-col w-full justify-center items-center  h-48">
+      <div class="stats h-32 w-3/5 shadow overflow-hidden mb-10">
+        <div class="stat flex flex-col justify-center items-center">
+          <div class="stat-title ">Internet Usage</div>
+          <div class="flex flex-row items-center transition ease-in-out hover:scale-110 duration-300">
+            <div class="stat-value text-primary mr-3">
+              {{internetUsed}}</div>
+            <span class="i-mdi-internet w-6 py-4"></span>
+          </div>
+          <div class="stat-desc">This Period</div>
+        </div>
+
+        <div class="stat flex flex-col justify-center items-center">
+          <div class="stat-title">Most expensive</div>
+          <div class="flex flex-row items-center transition ease-in-out hover:scale-110 duration-300">
+            <div class="stat-value mr-3">{{mostExpensiveApp.split('.')[0]}}</div>
+            <span class="i-lucide-coins p-3 text-warning"></span>
+          </div>
+          <div class="stat-desc flex flex-row">
+            <span class="i-mdi-sucess-outline text-success"></span>
+            <p>First</p>
+          </div>
+        </div>
+
+
+        <div class="stat flex flex-col justify-center items-center">
+
+          <div class="stat-title">Download Usage</div>
+          <div class="flex flex-row items-center transition ease-in-out hover:scale-110 duration-300">
+            <div class="stat-value text-secondary mr-3">{{downloadUsage}}/s</div>
+            <span class="i-mdi-download w-8 py-4"></span>
+          </div>
+
+          <div class="stat-desc">Momentary use</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="overflow-x-auto scrollbar overflow-y-auto mb-5 w-4/5">
+      <table class="table w-full">
+        <!-- head -->
+        <thead class="">
+          <tr>
+            <th></th>
+            <th (click)="sort('name')">
+              Name
+              <span class="i-mdi-sort-variant" [ngClass]="{hidden: sortKey!=='name'}"></span>
+            </th>
+            <th (click)="sort('download')">Download
+              <span class="i-mdi-sort-variant" [ngClass]="{hidden: sortKey!=='download'}"></span>
+            </th>
+            <th (click)="sort('download_speed')">Download Speed
+              <span class="i-mdi-sort-variant" [ngClass]="{hidden: sortKey!=='download_speed'}"></span>
+            </th>
+            <th (click)="sort('upload')">Upload
+              <span class="i-mdi-sort-variant" [ngClass]="{hidden: sortKey!=='upload'}"></span>
+            </th>
+            <th (click)="sort('upload_speed')">Upload Speed
+              <span class="i-mdi-sort-variant" [ngClass]="{hidden: sortKey!=='upload_speed'}"></span>
+            </th>
+            <th (click)="sort('last_time_update')">Last Updated
+              <span class="i-mdi-sort-variant" [ngClass]="{hidden: sortKey!=='last_time_update'}"></span>
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          <tr *ngFor="let data of trafficData;  let i = index" class="hover" (click)="showDetails(i)">
+            <td class="text-primary font-bold">{{i}}</td>
+            <td>{{ data.name.split('.')[0] }}</td>
+            <td>{{ data.download }}</td>
+            <td>{{ data.download_speed }}</td>
+            <td>{{ data.upload }}</td>
+            <td>{{ data.upload_speed }}</td>
+            <td>{{ data.last_time_update }}</td>
+            <td><label for="modal2"
+                class="i-mdi-info-circle-outline text-success hover:scale-125 duration-300 p-2"></label>
+              <label for="modal"
+                class="i-mdi-internet-protocol-outline text-info hover:scale-125 duration-300 p-2 ml-4"></label>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <input type="checkbox" id="modal" class="modal-toggle scrollbar" />
+    <label for="modal" class="modal scrollbar cursor-pointer">
+      <label class="modal-box scrollbar relative w-screen" for="">
+        <h3 class="text-lg font-bold mb-3">App: {{selectedTrafficInfo?.name}}</h3>
+        <div class="flex flex-col scrollbar justify-center">
+          <div class="flex flex-col justify-center">
+            <div class="overflow-x-auto scrollbar">
+              <table class="table table-compact  w-full">
+                <thead>
+                  <tr>
+                    <th>host</th>
+                    <th>download</th>
+                    <th>upload</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let host of selectedTrafficInfo?.host_traffic">
+                    <th>{{host.host}}</th>
+                    <td>{{host.download}}</td>
+                    <td>{{host.upload}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </label>
+    </label>
+
+    <input type="checkbox" id="modal2" class="modal-toggle scrollbar" />
+    <label for="modal2" class="modal scrollbar cursor-pointer">
+      <label class="modal-box scrollbar relative w-screen" for="">
+        <h3 class="text-lg font-bold mb-3">App: {{selectedTrafficInfo?.name}}</h3>
+        <div class="flex flex-col scrollbar justify-center">
+          <div class="flex flex-col justify-center">
+            <div class="overflow-x-auto scrollbar">
+              <table class="table table-compact  w-full">
+                <thead>
+                  <tr>
+                    <th>protocol</th>
+                    <th>download</th>
+                    <th>upload</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let host of selectedTrafficInfo?.protocol_traffic">
+                    <th>{{host.protocol}}</th>
+                    <td>{{host.download}}</td>
+                    <td>{{host.upload}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </label>
+    </label>
+
+  </div>
+</div>
